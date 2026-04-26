@@ -432,6 +432,14 @@
     font-size: 10px;
   }
 
+  .layer-items code {
+    background: rgba(0, 255, 135, 0.1);
+    color: var(--green);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+
   /* VS TABLE */
   .vs-section {
     padding: 80px 48px;
@@ -704,9 +712,9 @@
   </div>
 
   <div class="hero-badges">
+    <div class="badge"><div class="dot"></div> PyPI + GitHub repos</div>
     <div class="badge"><div class="dot"></div> Zero execution — AST only</div>
-    <div class="badge"><div class="dot"></div> Works on bash, zsh, fish, PowerShell</div>
-    <div class="badge"><div class="dot red"></div> Blocks high risk installs</div>
+    <div class="badge"><div class="dot"></div> 24-hour cache for instant repeats</div>
   </div>
 </section>
 
@@ -757,6 +765,53 @@
   </div>
 </section>
 
+<!-- GITHUB DEMO -->
+<section class="demo-section reveal">
+  <div class="terminal">
+    <div class="terminal-bar">
+      <div class="terminal-dot"></div>
+      <div class="terminal-dot"></div>
+      <div class="terminal-dot"></div>
+      <span class="terminal-title">terminal</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-cmd">$</span> <span class="t-white">pip install git+https://github.com/psf/requests</span></div>
+      <div class="t-muted" style="margin: 8px 0 16px">Analyzing git+https://github.com/psf/requests...</div>
+
+      <div class="t-label">──────── TRUST SCORE ────────</div>
+      <div class="t-section">
+        <div class="t-row"><span class="t-white">Repo age</span><span class="t-green">5550d ✅</span></div>
+        <div class="t-row"><span class="t-white">Stars</span><span class="t-green">53925 ✅</span></div>
+        <div class="t-row"><span class="t-white">Contributors</span><span class="t-green">120 ✅</span></div>
+        <div class="t-row"><span class="t-white">Known vulns</span><span class="t-red">2 found 🔴</span></div>
+      </div>
+
+      <div class="t-label">──────── CODE ANALYSIS ──────</div>
+      <div class="t-section">
+        <div class="t-row"><span class="t-white">Network requests</span><span class="t-green">not found ✅</span></div>
+        <div class="t-row"><span class="t-white">Env var access</span><span class="t-green">not found ✅</span></div>
+        <div class="t-row"><span class="t-white">Shell execution</span><span class="t-green">not found ✅</span></div>
+        <div class="t-row"><span class="t-white">Base64 obfuscation</span><span class="t-green">not found ✅</span></div>
+      </div>
+
+      <div class="t-verdict low">
+        <span class="t-green">✅ LOW RISK</span>
+        <span class="t-white">Score: 100</span>
+      </div>
+
+      <div style="margin-top: 12px; color: var(--text)">Installing git+https://github.com/psf/requests...</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="demo-label">GitHub repositories</div>
+    <h2 class="demo-heading">Analyze direct GitHub installs.</h2>
+    <p class="demo-desc">
+      pipguard now fully analyzes Python packages installed directly from GitHub. Repository age, stars, contributor count, license, and last commit time all feed into the risk score — same as PyPI packages.
+    </p>
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
 <section class="how-section reveal">
   <div class="section-label">How it works</div>
@@ -768,11 +823,11 @@
       <div class="layer-tag">Layer 1 — No download required</div>
       <div class="layer-title">Trust signals</div>
       <ul class="layer-items">
-        <li>Package age and version history</li>
-        <li>Download spike detection</li>
+        <li><strong>PyPI:</strong> age, versions, download spikes</li>
+        <li><strong>GitHub:</strong> repo age, stars, contributors</li>
         <li>Known CVEs via OSV.dev</li>
-        <li>GitHub repo presence and activity</li>
-        <li>Maintainer account signals</li>
+        <li>License presence (GitHub)</li>
+        <li>Last commit & activity</li>
       </ul>
     </div>
     <div class="layer">
@@ -780,11 +835,11 @@
       <div class="layer-tag">Layer 2 — AST-based, no code runs</div>
       <div class="layer-title">Static analysis</div>
       <ul class="layer-items">
-        <li>Downloads source tarball only</li>
-        <li>Parses setup.py and __init__.py via AST</li>
+        <li>Parses setup.py, __init__.py, pyproject.toml</li>
         <li>Detects network calls and env var access</li>
         <li>Catches shell execution and home dir access</li>
-        <li>Flags base64 obfuscation patterns</li>
+        <li>Flags base64 obfuscation</li>
+        <li>Works for both PyPI and GitHub sources</li>
       </ul>
     </div>
   </div>
@@ -840,6 +895,59 @@
   </div>
 </section>
 
+<!-- FEATURES -->
+<section class="how-section reveal">
+  <div class="section-label">Key features</div>
+  <h2 class="section-heading">Everything built in.</h2>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="layer-num">✓</div>
+      <div class="layer-tag">PyPI + GitHub</div>
+      <div class="layer-title">Dual source support</div>
+      <ul class="layer-items">
+        <li>Analyze PyPI packages by name</li>
+        <li>Analyze direct GitHub installs</li>
+        <li>Works with git+https:// URLs</li>
+        <li>Branch-specific analysis support</li>
+      </ul>
+    </div>
+    <div class="layer">
+      <div class="layer-num">✓</div>
+      <div class="layer-tag">DevOps Ready</div>
+      <div class="layer-title">CI/CD integration</div>
+      <ul class="layer-items">
+        <li><code>--ci</code> mode for pipelines</li>
+        <li>Exit codes for automation</li>
+        <li><code>--fail-on medium|high</code></li>
+        <li>Batch scan requirements files</li>
+      </ul>
+    </div>
+    <div class="layer">
+      <div class="layer-num">✓</div>
+      <div class="layer-tag">Performance</div>
+      <div class="layer-title">24-hour smart cache</div>
+      <ul class="layer-items">
+        <li>Instant repeat installs</li>
+        <li>Local cache at ~/.pipguard/</li>
+        <li><code>--no-cache</code> for fresh checks</li>
+        <li>Force clear with <code>update --force</code></li>
+      </ul>
+    </div>
+    <div class="layer">
+      <div class="layer-num">✓</div>
+      <div class="layer-tag">Rich Commands</div>
+      <div class="layer-title">CLI toolkit</div>
+      <ul class="layer-items">
+        <li><code>install</code> — analyze & install</li>
+        <li><code>info</code> — report only, no install</li>
+        <li><code>scan</code> — batch requirements.txt</li>
+        <li><code>history</code> — recent scans</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- VS TABLE -->
 <section class="vs-section reveal">
   <div class="section-label">Comparison</div>
@@ -848,41 +956,62 @@
   <table class="vs-table">
     <thead>
       <tr>
-        <th>Tool</th>
-        <th>CVE detection</th>
-        <th>Pre-install</th>
-        <th>AST analysis</th>
-        <th>pipguard</th>
+        <th>Feature</th>
+        <th>pip audit</th>
+        <th>socket.dev</th>
+        <th>Dependabot</th>
+        <th style="color: var(--green); font-weight: 700;">pipguard</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>pip audit</td>
+        <td>At install interception</td>
+        <td class="cross">✗</td>
+        <td class="cross">✗</td>
+        <td class="cross">✗</td>
         <td class="check">✓</td>
-        <td class="cross">✗</td>
-        <td class="cross">✗</td>
-        <td class="check">✓ all three</td>
       </tr>
       <tr>
-        <td>socket.dev</td>
+        <td>Analyzes PyPI packages</td>
         <td class="check">✓</td>
-        <td class="cross">✗ separate workflow</td>
         <td class="check">✓</td>
-        <td class="check">✓ + CLI intercept</td>
+        <td class="check">✓</td>
+        <td class="check">✓</td>
       </tr>
       <tr>
-        <td>OSV.dev</td>
-        <td class="check">✓</td>
-        <td class="cross">✗ database only</td>
+        <td>Analyzes GitHub repos</td>
         <td class="cross">✗</td>
-        <td class="check">✓ integrated</td>
+        <td class="cross">✗</td>
+        <td class="cross">✗</td>
+        <td class="check">✓</td>
       </tr>
       <tr>
-        <td>Dependabot</td>
-        <td class="check">✓</td>
-        <td class="cross">✗ reacts after install</td>
+        <td>AST code analysis</td>
         <td class="cross">✗</td>
-        <td class="check">✓ before install</td>
+        <td class="check">✓</td>
+        <td class="cross">✗</td>
+        <td class="check">✓</td>
+      </tr>
+      <tr>
+        <td>CLI integration</td>
+        <td class="check">✓</td>
+        <td class="cross">✗ web only</td>
+        <td class="cross">✗ GitHub only</td>
+        <td class="check">✓</td>
+      </tr>
+      <tr>
+        <td>24-hour cache</td>
+        <td class="cross">✗</td>
+        <td class="cross">✗</td>
+        <td class="cross">✗</td>
+        <td class="check">✓</td>
+      </tr>
+      <tr>
+        <td>CI/CD ready</td>
+        <td class="check">✓</td>
+        <td class="cross">Limited</td>
+        <td class="check">✓</td>
+        <td class="check">✓</td>
       </tr>
     </tbody>
   </table>
